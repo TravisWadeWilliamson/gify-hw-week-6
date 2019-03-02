@@ -16,32 +16,43 @@
  * create a clear button to reset back to default
  */
 
+
 //Array of Pre-selected GIF themes
 var preSelectedGif = ['Pets', 'Ribald',];
-
+var gifSearch = 'cats'
 // DisplayGifInfo function will pull the gifs from the giphy.com and then pushes it to the html
-function displayGifInf() {
+// function displayGifInf() {
 
     // Create variable for storing the pre-selected themes from the API
     var gifTheme = $(this).attr("data-gif");
     // Create variable to  grab the data from the API
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifTheme + "&api_key=dc6zaTOxFJmzC&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=dc6zaTOxFJmzC&limit=10";
 
     // Creating AJAX call for the GIF theme button being clicked
     $.ajax({
-        url: "https://api.giphy.com/v1/gifs/search?q=cats&api_key=dc6zaTOxFJmzC&limit=10",
+        url: queryURL,
         method: "GET"
     }).then(function (response) {
         console.log(response);
     });
 
-    // // Creating variable to store data from the AJAX request
-    // var ajaxGifResults = response.data;
+    // Creating variable to store data from the AJAX request
+    var ajaxGifResults = response.data;
 
-    // // Creating a loop to cycle through each result item
-    // forEach(function(ajaxGifRuslts) {
-        
+    // Creating a loop to cycle through each result item
+    for (var i = 0; i < ajaxGifResults.length; i++) {
 
-    // })
+        // Creating a div to hold the GIF 
+        var gifDiv = $("<div class='gif'>")
 
-}
+        // Creating a p tag with the result item's rating
+        var ratingP = $("<p>").text(`Rated: ${ajaxGifResults[i].rating}`);
+
+       
+
+
+
+
+    }
+
+// }
