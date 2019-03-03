@@ -15,16 +15,19 @@
   <div class="container">
     <h1>GIF Search</h1>
 
-    <!-- GIFs will get dumped here -->
-    <div id="GIFs-view"></div>
+    <!-- Rendered buttons will be pushed here -->
+    <div id="GIF-buttons"></div>
 
     <form id="GIF-form">
       <label for="GIF-input">Add a GIF!</label>
       <input type="text" id="GIF-input"><br>
 
-      <!-- Button triggers new movie to be added -->
-      <input id="add-GIF" type="submit" value="Add a GIF!">
+      <!-- Button triggers new GIF button to be added -->
+      <input id="add-GIF-button" type="submit" value="Add a GIF!">
     </form>
+
+    <!-- GIFs will get pushed here -->
+    <div id="giphies-cache"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
