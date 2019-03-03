@@ -6,14 +6,14 @@
  * User should be able to click on GIFs to animate and stop
  * 
  * To-do:
- * create link to API
- * create function to pull the info
- * Create an array of GIF themes for buttons
- * on click display 10 pics
- * on second click prepend 10 more
- * click on GIF to stop or animate
- * create input box for user to add search button for her own GIF theme
- * create a clear button to reset back to default
+ * create link to API (DONE)
+ * create function to pull the info (DONE)
+ * Create an array of GIF themes for buttons (NOPE)
+ * on click display 10 pics (DONE)
+ * on second click prepend 10 more (DONE)
+ * click on GIF to stop or animate (NOPE)
+ * create input box for user to add search button for her own GIF theme (NOPE)
+ * create a clear button to reset back to default (NOPE)
  */
 
 
@@ -44,13 +44,16 @@ $('button').on('click', function () {
 
             //Create the paragraph tag with the rating of the GIF.
             var rating = $(`<p>`).text(`Rated: ${result.rating}`);
-            
+
             //Create and store an image tag
             var animalImage = $(`<img>`);
 
-            //Setting the src attribute of the image to a property pulled off the result item
+            //Setting the src attribute of the image to a property pulled off the result item in order to animate and freeze
+            animalImage.attr({ src: result.images.fixed_height_still.url, 'data-still': result.images.fixed_height_still.url, 'data-animate': result.images.fixed_height.url });
 
-            animalImage.attr("src", result.images.fixed_height.url);
+            //Add class to animalImage
+            animalImage.addClass("giphy");
+
 
             //Append the p tag and image tag to the animalDiv element
             animalDiv.append(rating);
@@ -58,41 +61,36 @@ $('button').on('click', function () {
 
             //Prepending the animalDiv to the html page in the #gifs-go-here div
             $(`#gifs-go-here`).prepend(animalDiv);
-            
+
+            //Create a function to freeze and reanimate the GIFs (Re-Animator; great 80s B-movie.)
+            $(".giphy").on("click", function () {
+                // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+                var state = $(animalImage).attr("data-state");
+                // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+                // Then, set the image's data-state to animate
+                // Else set src to the data-still value
+                if (state === "still") {
+                    $(animalImage).attr("src", $(animalImage).attr("data-animate"));
+                    $(animalImage).attr("data-state", "animate");
+                } else {
+                    $(animalImage).attr("src", $(animalImage).attr("data-still"));
+                    $(animalImage).attr("data-state", "still");
+                }
+            });
+
         });
     });
 })
-        
 
-// // Creating variable to store data from the AJAX request
-// var ajaxGifResults = response.data;
 
-// // Creating a loop to cycle through each result item
-// for (var i = 0; i < ajaxGifResults.length; i++) {
 
-//     // Creating a div to hold the GIF 
-//     var gifDiv = $("<div class='gif'>")
+// // Creating and storing an image tag
+//              var animalImage = $("<img>");
+//              // Setting the src attribute of the image to a property pulled off the result item
+//              //animalImage.attr("src", results[i].images.fixed_height.url);
+//              animalImage.attr({src: results[i].images.fixed_height_still.url, "data-still":results[i].images.fixed_height_still.url,
+//              "data-animate":results[i].images.fixed_height.url, "data-state":"still", class:"gif"});
 
-//     // Creating a p tag with the result item's rating
-//     var ratingP = $("<p>").text(`Rated: ${ajaxGifResults[i].rating}`);
-
-//     // Displaying the rating
-//     gifDiv.append(ratingP);
-
-//     // Retrieving the URL for the image
-//     var gifURL = ajaxGifResults[i].images.fixed_height.url;
-
-//     // Creating an element to hold the image
-//     var gifImage = $("<img>").attr("src", gifURL);
-
-//     // Appending the rating and image tag to the animalDiv
-//     gifDiv.append(ratingP);
-//     gifDiv.append(gifImage);
-
-//     // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
-//     $("#gifs-go-here").prepend(gifDiv);
-
-// };
 
 // // Function for displaying movie data
 // function renderButtons() {
