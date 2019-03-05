@@ -5,7 +5,11 @@ body {
 button, div, form, input {
   margin: 10px;
 }
+ #shiny {
+   color: rgb(123, 219, 13);
+   width: 50%;
 
+ }
 .not-nav {
   height: 100%;
   background-color: #1d1f20;
