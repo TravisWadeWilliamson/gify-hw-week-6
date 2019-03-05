@@ -4,6 +4,7 @@
  * If she clicks the same button again, more GIFs will prepend to the screen.
  * User should be able to search for her own GIFs.
  * User should be able to click on GIFs to animate and stop
+ * All buttons should be generated dynamically.
  * 
  * To-do:
  * create link to API (DONE)
@@ -11,20 +12,70 @@
  * Create an array of GIF themes for buttons (NOPE)
  * on click display 10 pics (DONE)
  * on second click prepend 10 more (DONE)
- * click on GIF to stop or animate (NOPE)
+ * click on GIF to stop or animate (DONE)
  * create input box for user to add search button for her own GIF theme (NOPE)
  * create a clear button to reset back to default (NOPE)
  */
+//Create an array to hold some preselcted GIF theme buttons
+var gifButtons = ["Animals", "Love", "Dumb People", "Rated R"]
 
+//Creating a function to display buttons from the array
+// function renderButtons() {
+
+//Deleting the GIF buttons prior to adding new GIF buttons. 
+//If we don't do this the form will resubmit itself and double up the buttons
+$('#generated').empty();
+
+//Loop through the array of GIF themes
+for (var i = 0; i < gifButtons.length; i++) {
+    console.log(gifButtons.length);
+
+
+    //Dynamically creating some buttons for each GIF theme in the array
+    var a = $('<button>');
+
+    //Adding an attribute
+    a.attr('data-name', gifButtons[i]);
+
+    //Provide the buttons' text
+    a.text(gifButtons[i]);
+
+    //Adding the buttons into the button div
+    $('#generated').append(a);
+}
+
+
+// }
+
+//Creating a function to render buttons after user searches gif
+
+$('#add-gif-button').on('click',
+    function (event) {
+
+        // Prevent the form from submitting itself
+        event.preventDefault();
+
+        // Grab the text from the input box and trims off any white space at front and end
+        var newGifButtons = $('#add-gif-button').val().trim();
+
+        // The gif from the textbox is then added to our array
+        gifButtons.push(newGifButtons);
+
+        // calling renderButtons which handles the processing of our array
+        // renderButtons();
+
+    })
 
 //Adding click even listener
 $('button').on('click', function () {
 
+
+
     //Grabbing and storing the data-animal property from the button
-    var animal = $(this).attr('data-animal');
+    var  = $(this).attr('data-animal');
 
     // Create variable to  grab the data from the API
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + animal + "&api_key=dc6zaTOxFJmzC&limit=10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifButtons + "&api_key=dc6zaTOxFJmzC&limit=10";
 
     // Creating AJAX call for the GIF theme button being clicked and log the response
     $.ajax({
@@ -81,60 +132,4 @@ $('button').on('click', function () {
         });
     });
 })
-
-
-
-// // Creating and storing an image tag
-//              var animalImage = $("<img>");
-//              // Setting the src attribute of the image to a property pulled off the result item
-//              //animalImage.attr("src", results[i].images.fixed_height.url);
-//              animalImage.attr({src: results[i].images.fixed_height_still.url, "data-still":results[i].images.fixed_height_still.url,
-//              "data-animate":results[i].images.fixed_height.url, "data-state":"still", class:"gif"});
-
-
-// // Function for displaying movie data
-// function renderButtons() {
-
-//     // Deleting the movie buttons prior to adding new movie buttons
-//     // (this is necessary otherwise we will have repeat buttons)
-//     $("#buttons-view").empty();
-
-//     // Looping through the array of movies
-//     for (var i = 0; i < preSelectedGif.length; i++) {
-
-//         // Then dynamicaly generating buttons for each movie in the array.
-//         // This code $("<button>") is all jQuery needs to create the start and end tag. (<button></button>)
-//         var a = $("<button>");
-//         // Adding a class
-//         a.addClass("gifButton");
-//         // Adding a data-attribute with a value of the movie at index i
-//         a.attr("data-name", preSelectedGif[i]);
-//         // Providing the button's text with a value of the movie at index i
-//         a.text(preSelectedGif[i]);
-//         // Adding the button to the HTML
-//         $("#buttons-view").append(a);
-//     }
-// }
-// // This function handles events where one button is clicked
-// $("#add-button").on("click", function (event) {
-//     // event.preventDefault() prevents the form from trying to submit itself.
-//     // We're using a form so that the user can hit enter instead of clicking the button if they want
-//     event.preventDefault();
-
-//     // This line will grab the text from the input box
-//     var preSelectedGif = $("#movie-input").val().trim();
-//     // The movie from the textbox is then added to our array
-//     movies.push(movie);
-
-//     // calling renderButtons which handles the processing of our movie array
-//     renderButtons();
-// });
-
-// // Calling the renderButtons function at least once to display the initial list of movies
-// renderButtons();
-
-
-
-
-
 
