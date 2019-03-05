@@ -13,19 +13,23 @@
 
 <body>
     <container>
+       <!-- Search and trigger new button -->
         <nav class="navbar navbar-dark bg-dark">
-            <a class="navbar-brand">Giphy Time!</a>
+            <a class="navbar-brand" id="shiny">Giphies Galore!</a>
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search GIFs" aria-label="Search">
+
+                <input id="new-gif-input" class="form-control mr-sm-2" type="search" placeholder="Search GIFs"
+                    aria-label="Search">
+
                 <button id="add-gif-button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
-            </div>
-        </nav>
+        </nav> 
 
         <!-- Buttons get dumped here -->
-        <div id="generated"></div>
+        
+        <div class="not-nav" id="generated-buttons"></div>
 
-        <div id="gifs-go-here"></div>
+        <div class="not-nav" id="gifs-go-here"></div>
     </container>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -9,70 +9,70 @@
  * To-do:
  * create link to API (DONE)
  * create function to pull the info (DONE)
- * Create an array of GIF themes for buttons (NOPE)
+ * Create an array of GIF themes for buttons (DONE)
  * on click display 10 pics (DONE)
  * on second click prepend 10 more (DONE)
  * click on GIF to stop or animate (DONE)
- * create input box for user to add search button for her own GIF theme (NOPE)
+ * create input box for user to add search button for her own GIF theme (DONE)
  * create a clear button to reset back to default (NOPE)
  */
 //Create an array to hold some preselcted GIF theme buttons
-var gifButtons = ["Animals", "Love", "Dumb People", "Rated R"]
-
-//Creating a function to display buttons from the array
-// function renderButtons() {
-
-//Deleting the GIF buttons prior to adding new GIF buttons. 
-//If we don't do this the form will resubmit itself and double up the buttons
-$('#generated').empty();
-
-//Loop through the array of GIF themes
-for (var i = 0; i < gifButtons.length; i++) {
-    console.log(gifButtons.length);
+var gifButtons = ["Cute", "Love", "Dumb People", "Kitties", "Puppies"]
 
 
-    //Dynamically creating some buttons for each GIF theme in the array
-    var a = $('<button>');
+    //Creating a function to display buttons from the array
+    function renderButtons() {
 
-    //Adding an attribute
-    a.attr('data-name', gifButtons[i]);
+        //Deleting the GIF buttons prior to adding new GIF buttons. 
+        //If we don't do this the form will resubmit itself and double up the buttons
+        $('#generated-buttons').empty();
 
-    //Provide the buttons' text
-    a.text(gifButtons[i]);
-
-    //Adding the buttons into the button div
-    $('#generated').append(a);
-}
+        //Loop through the array of GIF themes
+        for (var i = 0; i < gifButtons.length; i++) {
+            console.log(gifButtons.length);
 
 
-// }
+            //Dynamically creating some buttons for each GIF theme in the array
+            var a = $('<button>');
 
-//Creating a function to render buttons after user searches gif
+            //Adding an attribute
+            a.attr('data-name', gifButtons[i]);
 
-$('#add-gif-button').on('click',
-    function (event) {
+            //Provide the buttons' text
+            a.text(gifButtons[i]);
 
-        // Prevent the form from submitting itself
-        event.preventDefault();
+            //Adding the buttons into the button div
+            $('#generated-buttons').append(a);
+        }
+    }
 
-        // Grab the text from the input box and trims off any white space at front and end
-        var newGifButtons = $('#add-gif-button').val().trim();
+    //Creating a function to render buttons after user searches gif
 
-        // The gif from the textbox is then added to our array
-        gifButtons.push(newGifButtons);
+    $('#add-gif-button').on('click',
+        function (event) {
 
-        // calling renderButtons which handles the processing of our array
-        // renderButtons();
+            // Prevent the form from submitting itself
+            event.preventDefault();
 
-    })
+            // Grab the text from the input box and trims off any white space at front and end
+            var newGifButtons = $('#new-gif-input').val().trim();
 
-//Adding click even listener
+            // The gif from the textbox is then added to our array
+            gifButtons.push(newGifButtons);
+
+            // calling renderButtons which handles the processing of our array
+            renderButtons();
+
+        });
+
+    //Calling renderButtons at least once to display the buttons  
+    renderButtons();
+
+
+    //Adding click even listener
 $('button').on('click', function () {
-
-
-
     //Grabbing and storing the data-animal property from the button
-    var  = $(this).attr('data-animal');
+    var gifButtons = $(this).attr('data-name');
 
     // Create variable to  grab the data from the API
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifButtons + "&api_key=dc6zaTOxFJmzC&limit=10";
@@ -91,41 +91,41 @@ $('button').on('click', function () {
         results.forEach(result => {
 
             //Create and store a div tag
-            var animalDiv = $('<div>');
+            var gifDiv = $('<div>');
 
             //Create the paragraph tag with the rating of the GIF.
             var rating = $(`<p>`).text(`Rated: ${result.rating}`);
 
             //Create and store an image tag
-            var animalImage = $(`<img>`);
+            var giphy = $(`<img>`);
 
             //Setting the src attribute of the image to a property pulled off the result item in order to animate and freeze
-            animalImage.attr({ src: result.images.fixed_height_still.url, 'data-still': result.images.fixed_height_still.url, 'data-animate': result.images.fixed_height.url });
+            giphy.attr({ src: result.images.fixed_height_still.url, 'data-still': result.images.fixed_height_still.url, 'data-animate': result.images.fixed_height.url });
 
-            //Add class to animalImage
-            animalImage.addClass("giphy");
+            //Add class to giphy
+            giphy.addClass("giphy");
 
 
-            //Append the p tag and image tag to the animalDiv element
-            animalDiv.append(rating);
-            animalDiv.append(animalImage);
+            //Append the p tag and image tag to the gifDiv element
+            gifDiv.append(rating);
+            gifDiv.append(giphy);
 
-            //Prepending the animalDiv to the html page in the #gifs-go-here div
-            $(`#gifs-go-here`).prepend(animalDiv);
+            //Prepending the gifDiv to the html page in the #gifs-go-here div
+            $(`#gifs-go-here`).prepend(gifDiv);
 
             //Create a function to freeze and reanimate the GIFs (Re-Animator; great 80s B-movie.)
             $(".giphy").on("click", function () {
                 // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-                var state = $(animalImage).attr("data-state");
+                var state = $(giphy).attr("data-state");
                 // If the clicked image's state is still, update its src attribute to what its data-animate value is.
                 // Then, set the image's data-state to animate
                 // Else set src to the data-still value
                 if (state === "still") {
-                    $(animalImage).attr("src", $(animalImage).attr("data-animate"));
-                    $(animalImage).attr("data-state", "animate");
+                    $(giphy).attr("src", $(giphy).attr("data-animate"));
+                    $(giphy).attr("data-state", "animate");
                 } else {
-                    $(animalImage).attr("src", $(animalImage).attr("data-still"));
-                    $(animalImage).attr("data-state", "still");
+                    $(giphy).attr("src", $(giphy).attr("data-still"));
+                    $(giphy).attr("data-state", "still");
                 }
             });
 
