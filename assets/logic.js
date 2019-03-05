@@ -15,6 +15,13 @@
  * click on GIF to stop or animate (DONE)
  * create input box for user to add search button for her own GIF theme (DONE)
  * create a clear button to reset back to default (NOPE)
+ * 
+ * WEIRD ISSUE: WHEN USER ADDS OWN SEARCH PARAMETER, THE SAME LOOP GIFs ARE ADDED.
+ * 
+ * TO DO:
+ * 
+ * NEED TO MAKE THE GIFS GO VERT NOT HORIZ
+ * CLEAR BUTTON
  */
 //Create an array to hold some preselcted GIF theme buttons
 var gifButtons = ["Cute", "Love", "Dumb People", "Kitties", "Puppies"]

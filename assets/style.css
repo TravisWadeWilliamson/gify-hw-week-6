@@ -12,8 +12,8 @@ button, div, form, input {
 }
 
 #generated-buttons,
-#gifs-go-here
- {
+#gifs-go-here,
+.row {
   display: flex;
   justify-content: center;
 }
