@@ -33,10 +33,10 @@ var gifButtons = ["Cute", "Love", "Dumb People", "Kitties", "Puppies"]
         //Deleting the GIF buttons prior to adding new GIF buttons. 
         //If we don't do this the form will resubmit itself and double up the buttons
         $('#generated-buttons').empty();
-
+        console.log(gifButtons)
         //Loop through the array of GIF themes
         for (var i = 0; i < gifButtons.length; i++) {
-            console.log(gifButtons.length);
+            //console.log(gifButtons.length);
 
 
             //Dynamically creating some buttons for each GIF theme in the array
@@ -45,6 +45,8 @@ var gifButtons = ["Cute", "Love", "Dumb People", "Kitties", "Puppies"]
             //Adding an attribute
             a.attr('data-name', gifButtons[i]);
 
+            //add a class to specify GIF button vs search
+            a.addClass('gifButton');
             //Provide the buttons' text
             a.text(gifButtons[i]);
 
@@ -63,8 +65,9 @@ var gifButtons = ["Cute", "Love", "Dumb People", "Kitties", "Puppies"]
 
             // Grab the text from the input box and trims off any white space at front and end
             var newGifButtons = $('#new-gif-input').val().trim();
-
-            // The gif from the textbox is then added to our array
+// console.log(newGifButtons);
+// console.dir(gifButtons);
+// The gif from the textbox is then added to our array
             gifButtons.push(newGifButtons);
 
             // calling renderButtons which handles the processing of our array
@@ -77,10 +80,10 @@ var gifButtons = ["Cute", "Love", "Dumb People", "Kitties", "Puppies"]
 
 
     //Adding click even listener
-$('button').on('click', function () {
+$(document).on('click', '.gifButton', function () {
     //Grabbing and storing the data-animal property from the button
     var gifButtons = $(this).attr('data-name');
-
+    console.log('query triggered');
     // Create variable to  grab the data from the API
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifButtons + "&api_key=dc6zaTOxFJmzC&limit=10";
 
@@ -92,7 +95,7 @@ $('button').on('click', function () {
 
         // Storing the data from the AJAX request in a results variable
         var results = response.data
-        console.log(results);
+        //console.log(results);
 
         // // Loops through the AJAX response
         results.forEach(result => {
